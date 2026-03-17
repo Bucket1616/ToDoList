@@ -122,8 +122,8 @@
     // Static Properties for the <todocircle/> tool
     ve.ui.ToDoListCircleTemplateTool.static.name = 'todolist-circle'; // Unique internal name
     ve.ui.ToDoListCircleTemplateTool.static.group = 'insert'; // Group with other insert tools
-    ve.ui.ToDoListCircleTemplateTool.static.title = 'Checkcircle'; // Displayed in VE Insert menu
-    ve.ui.ToDoListCircleTemplateTool.static.icon = 'ellipsis'; // Icon for the button
+    ve.ui.ToDoListCircleTemplateTool.static.title = 'Radio Button'; // Displayed in VE Insert menu
+    ve.ui.ToDoListCircleTemplateTool.static.icon = 'circle'; // Icon for the button
     ve.ui.ToDoListCircleTemplateTool.static.commandName = 'addtodocircle'; // Command this tool executes
 
     // Register the <todocircle/> tool
