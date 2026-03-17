@@ -32,6 +32,9 @@
 			"remoteExtPath": "ToDoList/modules/ext.ToDoList",
 			"scripts": [
 				"ext.ToDoList.js"
+			],
+			"styles": [
+				"ext.todolist.css"
 			]
 		},
 		"ext.ToDoList.VE": {
