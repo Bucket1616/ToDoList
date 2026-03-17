@@ -20,16 +20,16 @@ class ToDoListHooks
 		return true;
 	}
 
-	Handler for square <todo>
+	//Handler for square <todo>
 	public static function processToDoListTag($input, array $args, Parser $parser, PPFrame $frame)
 	{
-		return self::renderInternal($args, $parser, 'todo');
+		return self::renderCheckBoxWidget($args, $parser, 'todo');
 	}
 
-	Handler for circle <todocircle>
+	//Handler for circle <todocircle>
 	public static function processToDoListTagCircle($input, array $args, Parser $parser, PPFrame $frame)
 	{
-		return self::renderCheckBoxWidget($args, $parser, 'todocirclce');
+		return self::renderCheckBoxWidget($args, $parser, 'todocircle');
 	}
 
 	 /**
@@ -49,7 +49,7 @@ class ToDoListHooks
 
         // Determine specific classes for styling and JS identification
         $extraClasses = ['todo-checkbox']; // Generic class for JS
-        if ($tagName === 'todocirle') {
+        if ($tagName === 'todocircle') {
             $extraClasses[] = 'todo-type-circle'; // Specific class for circle style
         } else {
             $extraClasses[] = 'todo-type-square'; // Specific class for square style
