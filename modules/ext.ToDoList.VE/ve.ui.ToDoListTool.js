@@ -1,14 +1,3 @@
-/**
- * Tool is used to insert a ToDoList template.
- *
- * @class
- * @extends ve.ui.ToDoListTemplateTool
- *
- * @constructor
- * @param {OO.ui.ToolGroup} toolGroup
- * @param {Object} [config] Configuration options
- */
-
 (function () {
     // Defensive check: Ensure VisualEditor and its core components are available
     // If not, log an error and stop execution to prevent further JS errors.
@@ -20,6 +9,23 @@
         console.error('ToDoList VE tool: Missing parent class ve.ui.MWTransclusionDialogTool. VisualEditor Transclusion module might not be loaded.');
         return;
     }
+
+    // --- ORIGINAL ToDoListTemplateTool definition and inheritance (MOVED INSIDE WRAPPER) ---
+    /**
+     * Tool is used to insert a ToDoList template.
+     *
+     * @class
+     * @extends ve.ui.MWTransclusionDialogTool
+     *
+     * @constructor
+     * @param {OO.ui.ToolGroup} toolGroup
+     * @param {Object} [config] Configuration options
+     */
+    ve.ui.ToDoListTemplateTool = function VeUiToDoListTemplateTool() {
+        // Parent constructor
+        ve.ui.ToDoListTemplateTool.super.apply(this, arguments);
+    };
+    OO.inheritClass(ve.ui.ToDoListTemplateTool, ve.ui.MWTransclusionDialogTool); // Now safely inside the wrapper
 
     /**
      * Command and Tool for inserting a <todo/> (Checkbox)
@@ -55,18 +61,6 @@
             })
         );
     }
-
-    /**
-     * Tool for inserting <todo/> into VisualEditor
-     * @class
-     * @extends ve.ui.MWTransclusionDialogTool
-     */
-    ve.ui.ToDoListTemplateTool = function VeUiToDoListTemplateTool() {
-        // Parent constructor
-        ve.ui.ToDoListTemplateTool.super.apply(this, arguments);
-    };
-    // Correctly inherit from MWTransclusionDialogTool as per original code
-    OO.inheritClass(ve.ui.ToDoListTemplateTool, ve.ui.MWTransclusionDialogTool);
 
     // Static Properties for the <todo/> tool
     ve.ui.ToDoListTemplateTool.static.name = 'todolist'; // Unique internal name
@@ -123,7 +117,6 @@
         // Parent constructor
         ve.ui.ToDoListCircleTemplateTool.super.apply(this, arguments);
     };
-    // Correctly inherit from MWTransclusionDialogTool
     OO.inheritClass(ve.ui.ToDoListCircleTemplateTool, ve.ui.MWTransclusionDialogTool);
 
     // Static Properties for the <todocircle/> tool
