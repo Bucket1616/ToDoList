@@ -9,51 +9,47 @@
  * @param {Object} [config] Configuration options
  */
 
-ve.ui.ToDoListTemplateTool = function VeUiToDoListTemplateTool() {
-    // Parent constructor
-    ve.ui.ToDoListTemplateTool.super.apply(this, arguments);
-};
-
-/* Inheritance */
-OO.inheritClass(ve.ui.ToDoListTemplateTool, ve.ui.MWTransclusionDialogTool);
-
-//Create and register wikitext command
-var checkboxElem = [{
-    type: 'mwTransclusionInline',
-    attributes: {
-        mw: {
-            parts: [
-                '<todo/>'
-            ]
-        }
-    }
-}, {
-    type: '/mwTransclusionInline'
-}];
-ve.ui.commandRegistry.register(
-    new ve.ui.Command('addcheckbox', 'content', 'insert', {
-        args: [checkboxElem, true, true],
-        supportedSelections: ['linear']
-    })
-);
-// VE source editor
-if (ve.ui.wikitextCommandRegistry) {
-    ve.ui.wikitextCommandRegistry.register(
-        new ve.ui.Command('addcheckbox', 'mwWikitext', 'wrapSelection', {
-            args: ['<todo/>'],
-            supportedSelections: ['linear']
-        })
+( function () {
+    // Register command for <todo> (Checkbox)
+    ve.ui.commandRegistry.register(
+        new ve.ui.Command(
+            'todo', 'mwWikitext', 'toggleWrapSelection',
+            { before: '<todo>', after: '' }
+        )
     );
-}
 
-/* Static Properties */
-ve.ui.ToDoListTemplateTool.static.name = 'todolist';
-ve.ui.ToDoListTemplateTool.static.name = 'insert';
-ve.ui.ToDoListTemplateTool.static.title = mw.msg('ve-todolist-toolbar-button');
-ve.ui.ToDoListTemplateTool.static.icon = 'check';
-ve.ui.ToDoListTemplateTool.static.commandName = 'addcheckbox';
+    // Define Tool for <todo> (Checkbox)
+    function ToDoListTool() {
+        ToDoListTool.super.apply( this, arguments );
+    }
+    OO.inheritClass( ToDoListTool, ve.ui.MWWikitextTool );
+    ToDoListTool.static.name = 'todolist';
+    ToDoListTool.static.group = 'insert';
+    ToDoListTool.static.icon = 'check'; // Standard checkmark icon
+    ToDoListTool.static.title = 'Checkbox'; // Displayed in VE Insert menu
+    ToDoListTool.static.commandName = 'todo';
+    ve.ui.toolFactory.register( ToDoListTool );
 
+    // --- New code for <todocircle> (Checkcircle) ---
 
-/* Registration */
+    // Register command for <todocircle>
+    ve.ui.commandRegistry.register(
+        new ve.ui.Command(
+            'todocircle', 'mwWikitext', 'toggleWrapSelection',
+            { before: '<todocircle>', after: '' } // Inserts <todocircle>
+        )
+    )
 
-ve.ui.toolFactory.register(ve.ui.ToDoListTemplateTool);
+    // Define Tool for <todocircle>
+    function ToDoListCircleTool() {
+        ToDoListCircleTool.super.apply( this, arguments );
+    }
+    OO.inheritClass( ToDoListCircleTool, ve.ui.MWWikitextTool );
+    ToDoListCircleTool.static.name = 'todolist-circle'; // Unique internal name for the tool
+    ToDoListCircleTool.static.group = 'insert';
+    ToDoListCircleTool.static.icon = 'ellipsis'; // Choose a suitable icon. 'circle' or 'radio' might be good if available. 'ellipsis' looks like a circle.
+    ToDoListCircleTool.static.title = 'Checkcircle'; // Displayed in VE Insert menu
+    ToDoListCircleTool.static.commandName = 'todocircle'; // This command inserts <todocircle>
+    ve.ui.toolFactory.register( ToDoListCircleTool );
+
+}() );
