@@ -47,7 +47,7 @@ class ToDoListHooks
 		}
 
 		// Determine specific classes
-		$extraClass = ($tagName === 'todo2') ? 'todo-circle' : 'todo-square';
+		$extraClass = ($tagName === 'todocircle') ? 'todo-circle' : 'todo-square';
 
 		// We add the 'todo-checkbox' class for the JS to find it,
 		// and 'todo-circle'/'todo-square' for styling and logic.
