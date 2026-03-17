@@ -11,7 +11,7 @@ class ToDoListHooks
 
 	/**
 	 * We extend parser here.
-	 * Parser will process our custom tag: <todo>
+	 * Parser will process our custom tags: <todo> and <todocircle>
 	 */
 	public static function onParserSetup(Parser $parser)
 	{
