@@ -1,0 +1,19 @@
+/* Styling for the original square checkbox (default OOUI behavior is often square) */
+/* Ensure the input inside the square type widget has a default border-radius */
+.todo-type-square .oo-ui-inputWidget-input {
+    border-radius: 3px;
+}
+
+/* Styling for the new circle checkbox */
+/* Target the actual input element within the widget container with the circle class */
+.todo-type-circle .oo-ui-inputWidget-input {
+    border-radius: 50% !important; /* Make it round! Use !important to override default OOUI */
+}
+
+/* Optional: Customize checkmark color or background for the circle when checked */
+/* This targets the actual input element when it's checked, within the circle widget */
+.todo-type-circle.oo-ui-checkboxInputWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-primary .oo-ui-inputWidget-input:checked {
+    /* Example: blue background for checked circles */
+    /* background-color: #007bff; */
+    /* border-color: #007bff; */
+}
