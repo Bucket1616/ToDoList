@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Parser\Parser;
+use MediaWiki\Output\OutputPage;
 
 /**
  * Hooks used by ToDoList extension 
@@ -28,35 +29,38 @@ class ToDoListHooks
 	Handler for circle <todocircle>
 	public static function processToDoListTagCircle($input, array $args, Parser $parser, PPFrame $frame)
 	{
-		return self::renderInternal($args, $parser, 'todo2');
+		return self::renderCheckBoxWidget($args, $parser, 'todocirclce');
 	}
 
 	 /**
 	 * Implementation of the '<todo>' tag processing
 	 */
-	public static function renderInternal(array $args, Parser $parser, $tagName)
-	{
-		$out = $parser->getOutput();
-		OutputPage::setupOOUI();
-		$out->setEnableOOUI(true);
-		$out->addModules(['ext.ToDoList']);
+	public static function renderCheckBoxWidget(array $args, Parser $parser, $tagName)
+    {
+        $out = $parser->getOutput();
+        OutputPage::setupOOUI(); // Ensure OOUI is set up
+        $out->setEnableOOUI(true);
+        $out->addModules(['ext.ToDoList']); // Load our JS/CSS
 
-		$isDone = False;
-		if (isset($args['done'])) {
-			$isDone =  filter_var($args['done'], FILTER_VALIDATE_BOOLEAN);
-		}
+        $isDone = false;
+        if (isset($args['done'])) {
+            $isDone = filter_var($args['done'], FILTER_VALIDATE_BOOLEAN);
+        }
 
-		// Determine specific classes
-		$extraClass = ($tagName === 'todocircle') ? 'todo-circle' : 'todo-square';
+        // Determine specific classes for styling and JS identification
+        $extraClasses = ['todo-checkbox']; // Generic class for JS
+        if ($tagName === 'todocirle') {
+            $extraClasses[] = 'todo-type-circle'; // Specific class for circle style
+        } else {
+            $extraClasses[] = 'todo-type-square'; // Specific class for square style
+        }
 
-		// We add the 'todo-checkbox' class for the JS to find it,
-		// and 'todo-circle'/'todo-square' for styling and logic.
-		$checkboxControl = new OOUI\CheckboxInputWidget([
-			'selected' => $isDone,
-			'classes' => ['todo-checkbox', $extraClass]
-		]);
+        $checkboxControl = new OOUI\CheckboxInputWidget([
+            'selected' => $isDone,
+            'classes' => $extraClasses,
+            'id' => 'todo-' . md5(uniqid(rand(), true)) // Add a unique ID to the checkbox for robust JS interaction
+        ]);
 
-		// Return the widget
-		return [$checkboxControl->toString(), 'markerType' => 'nowiki'];
-	}
+        return [$checkboxControl->toString(), 'markerType' => 'nowiki'];
+    }
 }
